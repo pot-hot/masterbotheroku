@@ -11,7 +11,6 @@ import multiprocessing
 from multiprocessing import Process
 import signal
 import backoff
-import threading
 from config import load_config
 from conversation import Conversation, ChatLine
 from requests.exceptions import HTTPError, ReadTimeout
@@ -90,8 +89,7 @@ def start(li, user_profile, config):
         elif event["type"] == "gameStart":
             logger.info("game detected")
             game_id = event["game"]["id"]
-            gamesip.append(threading.Thread(target=play_game,args=(li, game_id, user_profile, config,)))
-            gamesip[-1].start()
+            play_game(li, game_id, user_profile, config)
             
     logger.info("Terminated")
     control_stream.terminate()
@@ -136,8 +134,8 @@ def play_game(li, game_id, user_profile, config):
         engine_path = os.path.join(cfg["dir"], cfg["fairyname"])
         bookname="bookchen.bin"
     engineeng = engine.SimpleEngine.popen_uci(engine_path)
-    engineeng.configure({'Threads':3})
-    engineeng.configure({'Hash':75})
+    engineeng.configure({'Threads':5})
+    engineeng.configure({'Hash':120})
 
     logger.info("+++ {}".format(game))
 
