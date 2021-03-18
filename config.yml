@@ -3,7 +3,7 @@ url: "https://lichess.org/"  # lichess base URL
 
 engine:                      # engine settings
   dir: "./engines/"          # dir containing engines, relative to this project
-  name: "stockfish_21031800_x64_avx2.zip"        # binary name of the engine to use
+  name: "sf"        # binary name of the engine to use
   fairyname: "fsf"
   lcname: "lsf"
 
